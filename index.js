@@ -1,4 +1,4 @@
-function compileBfCode(bfCode) {
+function compileBfCode(bfCode, inputFromFunc) {
     let bfMainArray = new Array(30000).fill(0);
 
     let data = bfCode;
@@ -81,8 +81,9 @@ function compileBfCode(bfCode) {
     document.getElementById("BFCode").innerHTML = `Result as output is equal to: ${output}`;
 }
 
-document.addEventListener("click", () => {
-    const bfCodeInput = prompt("Type in Brainfuck code. Leave this empty if you don't need this.");
-    const StringedInput = prompt("Type in any string. Leave this empty if you don't need this.")
-    compileBfCode(bfCodeInput, StringedInput);
-});
+function runGetInput() {
+    const bfCodeInput = document.getElementById("input").value;
+    const StringedInput = document.getElementById("input2").value;
+    console.log(bfCodeInput, StringedInput);
+    compileBfCode(bfCodeInput, StringedInput)
+}
