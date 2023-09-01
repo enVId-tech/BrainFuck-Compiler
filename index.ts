@@ -87,7 +87,10 @@ function compileBfCode(bfCode: string, inputFromFunc: string): void {
 }
 
 document.addEventListener("click", () => {
-    const bfCodeInput: string | null = prompt("Type in Brainfuck code.");
+    const bfCodeInput: string | null = prompt("Type in Brainfuck code. Leave this empty if you don't need this.");
+    const StringedInput: string | null = prompt("Type in any string. Leave this empty if you don't need this.")
+    compileBfCode(bfCodeInput, StringedInput);
+
     if (bfCodeInput) {
         compileBfCode(bfCodeInput);
     }
