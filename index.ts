@@ -1,16 +1,16 @@
-function compileBfCode(bfCode) {
-    let bfMainArray = new Array(30000).fill(0);
+function compileBfCode(bfCode: string, inputFromFunc: string): void {
+    const bfMainArray: number[] = new Array(30000).fill(0);
 
-    let data = bfCode;
+    let data: string = bfCode;
 
-    let pointerIndex = 0;
-    let inputIndex = 0;
-    const input = inputFromFunc;
+    let pointerIndex: number = 0;
+    let inputIndex: number = 0;
+    const input: string = inputFromFunc;
 
-    const validChars = "+-<>.,[]";
-    let output = '';
+    const validChars: string = "+-<>.,[]";
+    let output: string = '';
 
-    for (let i = 0; i < data.length; i++) {
+    for (let i: number = 0; i < data.length; i++) {
         if (!validChars.includes(data[i])) {
             continue;
         }
@@ -21,7 +21,7 @@ function compileBfCode(bfCode) {
                     break;
                 case "[":
                     if (bfMainArray[pointerIndex] === 0) {
-                        let loopDepth = 1;
+                        let loopDepth: number = 1;
                         while (loopDepth > 0) {
                             i++;
                             if (data[i] === "[") {
@@ -32,9 +32,9 @@ function compileBfCode(bfCode) {
                         }
                     }
                     break;
-                case "]": // Add this case for closing bracket
+                case "]":
                     if (bfMainArray[pointerIndex] !== 0) {
-                        let loopDepth = 1;
+                        let loopDepth: number = 1;
                         while (loopDepth > 0) {
                             i--;
                             if (data[i] === "]") {
@@ -49,12 +49,12 @@ function compileBfCode(bfCode) {
                     pointerIndex++;
                     break;
                 case "<":
-                    if (pointerIndex != 0) {
+                    if (pointerIndex !== 0) {
                         pointerIndex--;
                     } else {
-                        throw new Error("Pointer at index of 0!")
-                    };
-                    break; // Don't forget the break statement here
+                        throw new Error("Pointer at index of 0!");
+                    }
+                    break;
                 case "+":
                     bfMainArray[pointerIndex]++;
                     break;
@@ -62,12 +62,14 @@ function compileBfCode(bfCode) {
                     bfMainArray[pointerIndex]--;
                     break;
                 case ",":
+                    // Replace 'inputIndex' with your actual implementation
                     if (inputIndex < input.length) {
                         bfMainArray[pointerIndex] = input.charCodeAt(inputIndex);
                         inputIndex++;
                     } else {
                         bfMainArray[pointerIndex] = 0;
                     }
+                    break;
                 default:
                     throw new Error(`Code includes an invalid character at index ${i}`);
             }
@@ -78,10 +80,15 @@ function compileBfCode(bfCode) {
 
     console.log(`Result as output is equal to ${output}`);
 
-    document.getElementById("BFCode").innerHTML = `Result as output is equal to: ${output}`;
+    const BFCodeElement: HTMLElement | null = document.getElementById("BFCode");
+    if (BFCodeElement) {
+        BFCodeElement.innerHTML = `Result as output is equal to: ${output}`;
+    }
 }
 
 document.addEventListener("click", () => {
-    let bfCodeInput = prompt("Type in Brainfuck code.");
-    compileBfCode(bfCodeInput);
+    const bfCodeInput: string | null = prompt("Type in Brainfuck code.");
+    if (bfCodeInput) {
+        compileBfCode(bfCodeInput);
+    }
 });
