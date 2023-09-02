@@ -1,7 +1,7 @@
 function compileBfCode(bfCode, inputFromFunc) {
     let bfMainArray = new Array(30000).fill(0);
 
-    let data = bfCode;
+    const data = bfCode;
 
     let pointerIndex = 0;
     let inputIndex = 0;
@@ -27,7 +27,7 @@ function compileBfCode(bfCode, inputFromFunc) {
                             if (data[i] === "[") {
                                 loopDepth++;
                             } else if (data[i] === "]") {
-                                loopDepth--;  
+                                loopDepth--;
                             }
                         }
                     }
@@ -46,15 +46,19 @@ function compileBfCode(bfCode, inputFromFunc) {
                     }
                     break;
                 case ">":
-                    pointerIndex++;
+                    if (pointerIndex < bfMainArray.length) {
+                        pointerIndex++;
+                    } else {
+                        throw new Error("You are at index 30000. You cannot go to a higher index than this!")
+                    }
                     break;
                 case "<":
-                    if (pointerIndex != 0) {
+                    if (pointerIndex > 0) {
                         pointerIndex--;
                     } else {
-                        throw new Error("Pointer at index of 0!")
+                        throw new Error("Pointer at index of 0! Cannot have a negative index!")
                     };
-                    break; // Don't forget the break statement here
+                    break;
                 case "+":
                     bfMainArray[pointerIndex]++;
                     break;
@@ -72,11 +76,12 @@ function compileBfCode(bfCode, inputFromFunc) {
                     throw new Error(`Code includes an invalid character at index ${i}`);
             }
         } catch (err) {
-            console.log(err);
+            console.error(err);
+            break;
         }
     }
 
-    console.log(`Result as output is equal to ${output}`);
+    console.log(`%cResult as output is equal to ${output}`, 'color: green');
 
     document.getElementById("BFCode").innerHTML = `Result as output is equal to: ${output}`;
 }
@@ -84,6 +89,5 @@ function compileBfCode(bfCode, inputFromFunc) {
 function runGetInput() {
     const bfCodeInput = document.getElementById("input").value;
     const StringedInput = document.getElementById("input2").value;
-    console.log(bfCodeInput, StringedInput);
     compileBfCode(bfCodeInput, StringedInput)
 }
