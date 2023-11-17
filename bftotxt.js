@@ -55,4 +55,4 @@ function runGetInput() {
     const bfCodeInput = document.getElementById("input").value;
     const StringedInput = document.getElementById("input2").value;
     document.getElementById("BFCode").innerHTML = `Result as output is equal to: ${bfToPlainText(bfCodeInput)}`;
-  }
+}
